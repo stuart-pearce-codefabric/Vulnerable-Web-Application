@@ -27,8 +27,9 @@ if(isset($_POST["submit"])) {
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	$type = $_FILES["file"]["type"];
 
-    if($type != "image/png" && $type != "image/jpeg" ){
-        echo "JPG, JPEG, PNG & GIF files are allowed.";
+    // Implement a file extension check in addition to MIME type verification for uploaded files.
+    if($type != "image/png" && $type != "image/jpeg" && $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ){
+        echo "Only JPG, JPEG, PNG & GIF files are allowed.";
         $uploadOk = 0;
     }
     

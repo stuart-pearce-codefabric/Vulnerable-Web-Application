@@ -25,17 +25,17 @@
         {
           $secure4 = $_GET[ 'file' ];
          
-            if ($secure4!="1.php" && $secure4!="2.php") 
-            {
-              $secure4=substr($secure4, 0,-4);
-            }
-            
-            if (isset($secure4)) 
-            {        
+          // Add further checks to ensure that only files within a certain directory can be accessed
+          $allowedFiles = ['1.php', '2.php'];
+          if (in_array($secure4, $allowedFiles)) 
+          {        
               include($secure4);              
-            }
+          }
+          else
+          {
+              echo "Error: File not found.";
+          }
         }              
       ?>
    </body>
 </html>
-

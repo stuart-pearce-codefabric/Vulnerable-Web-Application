@@ -27,17 +27,25 @@ if(isset($_POST["submit"])) {
 	$type = $_FILES["file"]["type"];
 	$check = getimagesize($_FILES["file"]["tmp_name"]);
 
-	if($check["mime"] == "image/png" || $check["mime"] == "image/gif"){
-		$uploadOk = 1;
-	}else{
-		$uploadOk = 0;
-		echo "Mime?";
-		echo $check["mime"];
-	} 
-  if($uploadOk == 1){
-      move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
-      echo "File uploaded /uploads/".$_FILES["file"]["name"];
-  }
+	if($check !== false) {
+		// Add image size verification to prevent the upload of unusually large images.
+		if($check[0] > 5000 || $check[1] > 5000) {
+			echo "Sorry, your file is too large.";
+			$uploadOk = 0;
+		}
+		if($check["mime"] == "image/png" || $check["mime"] == "image/gif"){
+			$uploadOk = 1;
+		}else{
+			$uploadOk = 0;
+			echo "Sorry, only PNG and GIF files are allowed.";
+		} 
+		if($uploadOk == 1){
+			move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+			echo "File uploaded /uploads/".$_FILES["file"]["name"];
+		}
+	} else {
+		echo "File is not an image.";
+	}
 }
 ?>
 

@@ -23,21 +23,18 @@
         
         if (isset( $_GET[ 'file' ]))        
         {
-          $secure3=$_GET[ 'file' ];
-          $secure3=strtolower($secure3);
+          $allowedFiles = ['1.php', '2.php'];
+          $fileRequested = $_GET[ 'file' ] . '.php';
           
-          $secure3=str_replace( array("http://", "https://") ,"" , $secure3);
-          $secure3=str_replace (array ( ":" , "/" , "..\\", "../" ), "" ,  $secure3);
-
-          if (isset($secure3)) 
+          if (in_array($fileRequested, $allowedFiles)) 
             {        
-              include($secure3.".php");
+              include($fileRequested);
+            }
+          else
+            {
+              echo "Error: File not found.";
             }
         }
       ?>
    </body>
 </html>
-
-
-
-

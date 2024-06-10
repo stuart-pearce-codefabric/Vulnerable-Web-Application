@@ -38,7 +38,14 @@
         '('  => '',
         ')'  => '',
         '`'  => '',
-        '||' => ''
+        '||' => '',
+        'cat ' => '', // Added to prevent arbitrary command execution
+        'more ' => '', // Added to prevent arbitrary command execution
+        'tail ' => '', // Added to prevent arbitrary command execution
+        'head ' => '', // Added to prevent arbitrary command execution
+        'less ' => '', // Added to prevent arbitrary command execution
+        'grep ' => '', // Added to prevent arbitrary command execution
+        'find ' => '' // Added to prevent arbitrary command execution
       );
       $target = str_replace(array_keys($substitutions),$substitutions,$target);
       echo shell_exec($target);

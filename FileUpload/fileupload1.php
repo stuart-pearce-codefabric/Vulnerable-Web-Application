@@ -23,9 +23,22 @@
 if(isset($_POST["submit"])) {
 	$target_dir = "uploads/";
 	$target_file = $target_dir . basename($_FILES["file"]["name"]);
+	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	
-    move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
-    echo "File uploaded /uploads/".$_FILES["file"]["name"];
+	// Check if file is an image
+	$check = getimagesize($_FILES["file"]["tmp_name"]);
+	if($check !== false) {
+		// Allow certain file formats
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+		&& $imageFileType != "gif" ) {
+			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+		} else {
+			move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+			echo "File uploaded /uploads/".$_FILES["file"]["name"];
+		}
+	} else {
+		echo "File is not an image.";
+	}
 }
 ?>
 </body>

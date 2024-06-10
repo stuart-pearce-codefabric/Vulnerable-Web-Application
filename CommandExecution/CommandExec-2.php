@@ -19,10 +19,13 @@
   <div style="background-color:#ecf2d0;padding:20px;border-radius:0px 0px 20px 20px" align="center">
     <?php
     if(isset($_GET["typeBox"])){
-      $target =$_GET["typeBox"];
-      $substitutions = array('&&' => '',';'  => '','/' => '','\\' => '' );
-      $target = str_replace(array_keys($substitutions),$substitutions,$target);
-      echo shell_exec($target);
+      $allowedCommands = ['date', 'whoami', 'id'];
+      $target = $_GET["typeBox"];
+      if (in_array($target, $allowedCommands)) {
+        echo shell_exec($target);
+      } else {
+        echo "This command is not allowed.";
+      }
       if($_GET["typeBox"] == "Trochilidae")
         echo "Welldone! You did great job.";
     }

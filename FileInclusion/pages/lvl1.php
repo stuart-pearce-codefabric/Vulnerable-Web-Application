@@ -22,10 +22,20 @@
         
         if (isset( $_GET[ 'file' ]))        
         {
-          @include($_GET[ 'file' ]);
-          echo"<div align='center'><b><h5>".$_GET[ 'file' ]."</h5></b></div> ";       
+          $file = $_GET[ 'file' ];
+          switch($file) {
+            case "1.php":
+              include("1.php");
+              break;
+            case "2.php":
+              include("2.php");
+              break;
+            default:
+              echo "File not found!";
+              break;
+          }
+          echo"<div align='center'><b><h5>".$file."</h5></b></div> ";       
         }
       ?>
    </body>
 </html>
-

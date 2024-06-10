@@ -24,14 +24,16 @@
         {
           $secure2 = $_GET[ 'file' ];
          
-          $secure2 = str_replace( array(  "..\\" , ".\\", " ./", "../"),"", $secure2 );          
+          // Implement stricter path validation to prevent directory traversal attacks
+          $secure2 = str_replace( array( "..\\" , ".\\", " ./", "../"),"", $secure2 );          
           $secure2 = str_replace( array( "http://" , "https://" ) ,"" , $secure2 );
-            
-            if (isset($secure2)) 
-            {        
-              @include($secure2);
-              echo"<div align='center'><b><h5>".$secure2."</h5></b></div> ";   
-            }
+          // Ensure the file requested is within the allowed directory
+          if (strpos($secure2, '/') === false && file_exists($secure2)) {
+            @include($secure2);
+            echo"<div align='center'><b><h5>".$secure2."</h5></b></div> ";   
+          } else {
+            echo "File not found or access denied.";
+          }
         }              
       ?>
    </body>
