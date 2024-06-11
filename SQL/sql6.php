@@ -33,14 +33,26 @@
 	$source = "";
 	if(isset($_GET["submit"])){
 		$number = $_GET['number'];
-		$query = "SELECT bookname,authorname FROM books WHERE number = '$number'";
-		$result = mysqli_query($conn,$query);
-		$row = @mysqli_num_rows($result);
-		echo "<hr>";
-		if($row > 0){
-			echo "<pre>There is a book with this index.</pre>";
-		}else{
-			echo "Not found!";
+		// Sanitize and validate input
+		$number = filter_var($number, FILTER_SANITIZE_NUMBER_INT);
+		if (!filter_var($number, FILTER_VALIDATE_INT) === false) {
+			// Prepare statement
+			$stmt = $conn->prepare("SELECT bookname,authorname FROM books WHERE number = ?");
+			$stmt->bind_param("i", $number);
+			$stmt->execute();
+			$result = $stmt->get_result();
+
+			if ($result->num_rows > 0) {
+				while ($row = $result->fetch_assoc()) {
+					echo "<hr>";
+				    echo $row['bookname']." ----> ".$row['authorname'];    
+				}
+			} else {
+				echo "0 result";
+			}
+			$stmt->close();
+		} else {
+			echo "Invalid input";
 		}
 	}
 

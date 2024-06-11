@@ -36,19 +36,23 @@
 	//echo "Connected successfully";
 	
 	if(isset($_POST["submit"])){
-		$firstname = $_POST["firstname"];
-		$sql = "SELECT lastname FROM users WHERE firstname='$firstname'";//String
-		$result = mysqli_query($conn,$sql);
+		$firstname = mysqli_real_escape_string($conn, $_POST["firstname"]); // Sanitize user input
+		// Prepare statement
+		$stmt = $conn->prepare("SELECT lastname FROM users WHERE firstname=?");
+		$stmt->bind_param("s", $firstname);
+		$stmt->execute();
+		$result = $stmt->get_result();
 		
-		if (mysqli_num_rows($result) > 0) {
+		if ($result->num_rows > 0) {
         // output data of each row
-    		while($row = mysqli_fetch_assoc($result)) {
+    		while($row = $result->fetch_assoc()) {
        			echo $row["lastname"];
        			echo "<br>";
     		}
 		} else {
     		echo "0 results";
 		}
+		$stmt->close();
 	}
 	
  ?>
