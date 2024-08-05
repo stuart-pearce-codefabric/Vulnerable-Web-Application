@@ -47,6 +47,22 @@ The `php.ini` file should be  altered. You can find the location of your `php.in
 
 **Note**: You can reset the database at any time, if needed or if you run into any problems. Once the database is ready, you can go to homepage and start hacking.
 
+## Running Automated Tests
+
+To run the automated tests for detecting OWASP top 10 vulnerabilities, follow these steps:
+
+1. Install the required dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+2. Run the tests using pytest:
+   ```
+   pytest tests/
+   ```
+
+The tests will search for the presence of vulnerabilities and fail if a vulnerability is successfully exploited.
+
 ## License
 The contents of this repository are licensed under the GNU General Public License v3.0.
  
