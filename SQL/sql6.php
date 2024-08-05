@@ -33,8 +33,11 @@
 	$source = "";
 	if(isset($_GET["submit"])){
 		$number = $_GET['number'];
-		$query = "SELECT bookname,authorname FROM books WHERE number = '$number'";
-		$result = mysqli_query($conn,$query);
+		$query = "SELECT bookname,authorname FROM books WHERE number = ?";
+		$stmt = $conn->prepare($query);
+		$stmt->bind_param("i", $number);
+		$stmt->execute();
+		$result = $stmt->get_result();
 		$row = @mysqli_num_rows($result);
 		echo "<hr>";
 		if($row > 0){
