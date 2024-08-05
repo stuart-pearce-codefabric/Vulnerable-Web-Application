@@ -35,22 +35,20 @@
 	//echo "Connected successfully";
 	if(isset($_POST["submit"])){
 		$number = $_POST['number'];
-		$query = "SELECT bookname,authorname FROM books WHERE number = $number"; //Int
-		$result = mysqli_query($conn,$query);
+		$stmt = $conn->prepare("SELECT bookname,authorname FROM books WHERE number=?");
+		$stmt->bind_param("i", $number);
+		$stmt->execute();
+		$result = $stmt->get_result();
 
-		if (!$result) { //Check result
-		    $message  = 'Invalid query: ' . mysql_error() . "\n";
-		    $message .= 'Whole query: ' . $query;
-		    die($message);
+		if ($result->num_rows > 0) {
+        // output data of each row
+    		while($row = $result->fetch_assoc()) {
+       			echo $row["bookname"]." ----> ".$row["authorname"];
+       			echo "<br>";
+    		}
+		} else {
+    		echo "0 results";
 		}
-
-		while ($row = mysqli_fetch_assoc($result)) {
-			echo "<hr>";
-		    echo $row['bookname']." ----> ".$row['authorname'];    
-		}
-
-		if(mysqli_num_rows($result) <= 0)
-			echo "0 result";
 	}
 
 ?> 
