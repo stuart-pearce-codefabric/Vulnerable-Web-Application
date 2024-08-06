@@ -18,7 +18,7 @@
 	</div>
 <?php 
 if (isset($_GET["username"])) {
-	$user = preg_replace("/<(.*)[S,s](.*)[C,c](.*)[R,r](.*)[I,i](.*)[P,p](.*)[T,t]>/i", "", $_GET["username"]);
+	$user = htmlspecialchars($_GET["username"], ENT_QUOTES, 'UTF-8');
 	echo "Your name is "."$user";
 }
  ?>

@@ -23,9 +23,13 @@
 if(isset($_POST["submit"])) {
 	$target_dir = "uploads/";
 	$target_file = $target_dir . basename($_FILES["file"]["name"]);
-	
-    move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
-    echo "File uploaded /uploads/".$_FILES["file"]["name"];
+	$check = getimagesize($_FILES["file"]["tmp_name"]);
+    if($check !== false) {
+        move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+        echo "File uploaded /uploads/".$_FILES["file"]["name"];
+    } else {
+        echo "File is not an image.";
+    }
 }
 ?>
 </body>

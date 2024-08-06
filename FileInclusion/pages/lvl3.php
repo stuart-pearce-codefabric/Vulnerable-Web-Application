@@ -31,13 +31,11 @@
 
           if (isset($secure3)) 
             {        
-              include($secure3.".php");
+              if (in_array($secure3, ['1', '2'])) { 
+                include($secure3.".php"); 
+              }
             }
         }
       ?>
    </body>
 </html>
-
-
-
-

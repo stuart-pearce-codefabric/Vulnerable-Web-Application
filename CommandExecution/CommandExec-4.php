@@ -41,7 +41,7 @@
         '||' => ''
       );
       $target = str_replace(array_keys($substitutions),$substitutions,$target);
-      echo shell_exec($target);
+      echo shell_exec(escapeshellcmd($target));
       if($_GET["typeBox"] == "secret")
         echo "You really found my secret!";
     }

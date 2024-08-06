@@ -27,13 +27,18 @@ if(isset($_POST["submit"])) {
 	$type = $_FILES["file"]["type"];
 	$check = getimagesize($_FILES["file"]["tmp_name"]);
 
-	if($check["mime"] == "image/png" || $check["mime"] == "image/gif"){
-		$uploadOk = 1;
-	}else{
+	if($check !== false) {
+		if($check["mime"] == "image/png" || $check["mime"] == "image/gif"){
+			$uploadOk = 1;
+		}else{
+			$uploadOk = 0;
+			echo "Mime?";
+			echo $check["mime"];
+		} 
+	} else {
+		echo "File is not an image.";
 		$uploadOk = 0;
-		echo "Mime?";
-		echo $check["mime"];
-	} 
+	}
   if($uploadOk == 1){
       move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
       echo "File uploaded /uploads/".$_FILES["file"]["name"];

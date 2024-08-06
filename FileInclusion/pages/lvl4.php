@@ -32,10 +32,11 @@
             
             if (isset($secure4)) 
             {        
-              include($secure4);              
+              if (in_array($secure4, ['1.php', '2.php'])) { 
+                include($secure4); 
+              }              
             }
         }              
       ?>
    </body>
 </html>
-
