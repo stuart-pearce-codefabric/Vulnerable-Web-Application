@@ -27,8 +27,15 @@ if(isset($_POST["submit"])) {
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	$type = $_FILES["file"]["type"];
 
+    // Validate file type
     if($type != "image/png" && $type != "image/jpeg" ){
         echo "JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
+    // Validate file size
+    if ($_FILES["file"]["size"] > 500000) {
+        echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
     

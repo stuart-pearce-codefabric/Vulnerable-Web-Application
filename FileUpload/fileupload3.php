@@ -34,6 +34,19 @@ if(isset($_POST["submit"])) {
 		echo "Mime?";
 		echo $check["mime"];
 	} 
+
+    // Validate file type
+    if($type != "image/png" && $type != "image/jpeg" ){
+        echo "JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
+    // Validate file size
+    if ($_FILES["file"]["size"] > 500000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+
   if($uploadOk == 1){
       move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
       echo "File uploaded /uploads/".$_FILES["file"]["name"];

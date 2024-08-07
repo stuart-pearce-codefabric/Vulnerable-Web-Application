@@ -18,10 +18,10 @@
 	</div>
 	<!--Admin password is in the secret table. I hope, anyone doesn't see it.-->
 <?php
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$db = "1ccb8097d0e9ce9f154608be60224c7c";
+	$servername = getenv('DB_SERVERNAME');
+	$username = getenv('DB_USERNAME');
+	$password = getenv('DB_PASSWORD');
+	$db = getenv('DB_NAME');
 	// Create connection
 	$conn = new mysqli($servername, $username, $password,$db);
 
@@ -33,9 +33,11 @@
 	$source = "";
 	if(isset($_GET["submit"])){
 		$number = $_GET['number'];
-		$query = "SELECT bookname,authorname FROM books WHERE number = '$number'";
-		$result = mysqli_query($conn,$query);
-		$row = @mysqli_num_rows($result);
+		$stmt = $conn->prepare("SELECT bookname,authorname FROM books WHERE number=?");
+		$stmt->bind_param("i", $number);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		$row = $result->num_rows;
 		echo "<hr>";
 		if($row > 0){
 			echo "<pre>There is a book with this index.</pre>";
