@@ -26,7 +26,7 @@
       }
     }
     if(isset($_GET["typeBox"])){
-      $target =$_GET["typeBox"];
+      $target = escapeshellarg($_GET["typeBox"]);
       $substitutions = array(
         '&&'=>'',
         '& ' => '',

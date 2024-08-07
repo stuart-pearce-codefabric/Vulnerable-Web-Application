@@ -23,7 +23,7 @@
 
         if (isset( $_GET[ 'file' ])) 
         {
-          $secure4 = $_GET[ 'file' ];
+          $secure4 = basename($_GET[ 'file' ]);
          
             if ($secure4!="1.php" && $secure4!="2.php") 
             {
@@ -32,10 +32,9 @@
             
             if (isset($secure4)) 
             {        
-              include($secure4);              
+              include(basename($secure4));              
             }
         }              
       ?>
    </body>
 </html>
-

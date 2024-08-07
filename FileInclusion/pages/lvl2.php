@@ -29,7 +29,7 @@
             
             if (isset($secure2)) 
             {        
-              @include($secure2);
+              @include(basename($secure2));
               echo"<div align='center'><b><h5>".$secure2."</h5></b></div> ";   
             }
         }              
