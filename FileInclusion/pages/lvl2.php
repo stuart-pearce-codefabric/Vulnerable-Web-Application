@@ -26,12 +26,17 @@
          
           $secure2 = str_replace( array(  "..\\" , ".\\", " ./", "../"),"", $secure2 );          
           $secure2 = str_replace( array( "http://" , "https://" ) ,"" , $secure2 );
-            
+
+          $allowed_files = array("1.php", "2.php");
+          if (in_array($secure2, $allowed_files)) {
             if (isset($secure2)) 
             {        
               @include($secure2);
               echo"<div align='center'><b><h5>".$secure2."</h5></b></div> ";   
             }
+          } else {
+            echo "Invalid file.";
+          }
         }              
       ?>
    </body>

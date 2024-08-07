@@ -19,28 +19,16 @@
   <div style="background-color:#ecf2d0;padding:20px;border-radius:0px 0px 20px 20px" align="center">
     <?php
     if(isset($_GET["typeBox"])){
-      $target =$_GET["typeBox"];
-      $substitutions = array(
-        '&&'=>'',
-        '& ' => '',
-        '&& ' => '',
-        ';'  => '',
-        '|' => '',
-        '-'  => '',
-        '$'  => '',
-        '('  => '',
-        ')'  => '',
-        '`'  => '',
-        '||' => '',
-        '/' => '',
-        '\\' => '',
-      );
-      $target = str_replace(array_keys($substitutions),$substitutions,$target);
-      echo shell_exec($target);
-      if($_GET["typeBox"] == "flag")
-        echo "You did again! Impressive.";
+      $target = $_GET["typeBox"];
+      $allowed_commands = array("flag");
+      if (in_array($target, $allowed_commands)) {
+        echo shell_exec($target);
+        if($target == "flag")
+          echo "You did again! Impressive.";
+      } else {
+        echo "Invalid command.";
+      }
     }
-
     ?>
   </div>
   </body>

@@ -19,14 +19,16 @@
   <div style="background-color:#ecf2d0;padding:20px;border-radius:0px 0px 20px 20px" align="center">
     <?php
     if(isset($_GET["typeBox"])){
-      $target =$_GET["typeBox"];
-      $substitutions = array('&&' => '',';'  => '','/' => '','\\' => '' );
-      $target = str_replace(array_keys($substitutions),$substitutions,$target);
-      echo shell_exec($target);
-      if($_GET["typeBox"] == "Trochilidae")
-        echo "Welldone! You did great job.";
+      $target = $_GET["typeBox"];
+      $allowed_commands = array("Trochilidae");
+      if (in_array($target, $allowed_commands)) {
+        echo shell_exec($target);
+        if($target == "Trochilidae")
+          echo "Welldone! You did great job.";
+      } else {
+        echo "Invalid command.";
+      }
     }
-
     ?>
   </div>
   </body>

@@ -25,17 +25,16 @@
         {
           $secure4 = $_GET[ 'file' ];
          
-            if ($secure4!="1.php" && $secure4!="2.php") 
-            {
-              $secure4=substr($secure4, 0,-4);
-            }
-            
+          $allowed_files = array("1.php", "2.php");
+          if (in_array($secure4, $allowed_files)) {
             if (isset($secure4)) 
             {        
               include($secure4);              
             }
+          } else {
+            echo "Invalid file.";
+          }
         }              
       ?>
    </body>
 </html>
-

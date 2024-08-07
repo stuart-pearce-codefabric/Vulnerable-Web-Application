@@ -27,7 +27,7 @@ if(isset($_POST["submit"])) {
 	$type = $_FILES["file"]["type"];
 	$check = getimagesize($_FILES["file"]["tmp_name"]);
 
-	if($check["mime"] == "image/png" || $check["mime"] == "image/gif"){
+	if($check["mime"] == "image/png" || $check["mime"] == "image/gif" || $check["mime"] == "image/jpeg"){
 		$uploadOk = 1;
 	}else{
 		$uploadOk = 0;

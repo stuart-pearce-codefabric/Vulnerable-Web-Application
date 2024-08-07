@@ -29,15 +29,16 @@
           $secure3=str_replace( array("http://", "https://") ,"" , $secure3);
           $secure3=str_replace (array ( ":" , "/" , "..\\", "../" ), "" ,  $secure3);
 
-          if (isset($secure3)) 
+          $allowed_files = array("1", "2");
+          if (in_array($secure3, $allowed_files)) {
+            if (isset($secure3)) 
             {        
               include($secure3.".php");
             }
+          } else {
+            echo "Invalid file.";
+          }
         }
       ?>
    </body>
 </html>
-
-
-
-
