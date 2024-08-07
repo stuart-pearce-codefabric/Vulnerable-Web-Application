@@ -26,26 +26,16 @@
       }
     }
     if(isset($_GET["typeBox"])){
-      $target =$_GET["typeBox"];
-      $substitutions = array(
-        '&&'=>'',
-        '& ' => '',
-        '&& ' => '',
-        ';'  => '',
-        '|' => '',
-        '-'  => '',
-        '$'  => '',
-        '('  => '',
-        ')'  => '',
-        '`'  => '',
-        '||' => ''
-      );
-      $target = str_replace(array_keys($substitutions),$substitutions,$target);
-      echo shell_exec($target);
-      if($_GET["typeBox"] == "secret")
-        echo "You really found my secret!";
+      $target = $_GET["typeBox"];
+      $allowed_commands = array("ls", "cat .hidden/log4.txt", "secret");
+      if (in_array($target, $allowed_commands)) {
+        echo shell_exec($target);
+        if($target == "secret")
+          echo "You really found my secret!";
+      } else {
+        echo "Invalid command.";
+      }
     }
-
     ?>
   </div>
   </body>

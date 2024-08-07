@@ -35,8 +35,11 @@
 	//echo "Connected successfully";
 	if(isset($_POST["submit"])){
 		$number = $_POST['number'];
-		$query = "SELECT bookname,authorname FROM books WHERE number = $number"; //Int
-		$result = mysqli_query($conn,$query);
+		$query = "SELECT bookname,authorname FROM books WHERE number = ?";
+		$stmt = $conn->prepare($query);
+		$stmt->bind_param("i", $number);
+		$stmt->execute();
+		$result = $stmt->get_result();
 
 		if (!$result) { //Check result
 		    $message  = 'Invalid query: ' . mysql_error() . "\n";
