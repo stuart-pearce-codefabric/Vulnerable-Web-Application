@@ -24,20 +24,23 @@ if(isset($_POST["submit"])) {
 	$target_file = $target_dir . basename($_FILES["file"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-	$type = $_FILES["file"]["type"];
-	$check = getimagesize($_FILES["file"]["tmp_name"]);
+	$type = mime_content_type($_FILES["file"]["tmp_name"]);
+	$size = $_FILES["file"]["size"];
 
-	if($check["mime"] == "image/png" || $check["mime"] == "image/gif"){
-		$uploadOk = 1;
-	}else{
-		$uploadOk = 0;
-		echo "Mime?";
-		echo $check["mime"];
-	} 
-  if($uploadOk == 1){
-      move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
-      echo "File uploaded /uploads/".$_FILES["file"]["name"];
-  }
+    if($type != "image/png" && $type != "image/jpeg" ){
+        echo "JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
+    if($size > 500000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+    
+    if($uploadOk == 1){
+        move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+        echo "File uploaded /uploads/".$_FILES["file"]["name"];
+    }
 }
 ?>
 

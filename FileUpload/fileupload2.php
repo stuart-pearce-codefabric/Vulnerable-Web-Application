@@ -25,10 +25,16 @@ if(isset($_POST["submit"])) {
 	$target_file = $target_dir . basename($_FILES["file"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-	$type = $_FILES["file"]["type"];
+	$type = mime_content_type($_FILES["file"]["tmp_name"]);
+	$size = $_FILES["file"]["size"];
 
     if($type != "image/png" && $type != "image/jpeg" ){
         echo "JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
+    if($size > 500000) {
+        echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
     

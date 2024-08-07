@@ -31,13 +31,9 @@
 
           if (isset($secure3)) 
             {        
-              include($secure3.".php");
+              include(basename($secure3).".php");
             }
         }
       ?>
    </body>
 </html>
-
-
-
-
