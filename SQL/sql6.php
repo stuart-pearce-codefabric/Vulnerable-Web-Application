@@ -34,8 +34,8 @@
 	if(isset($_GET["submit"])){
 		$number = $_GET['number'];
 		$query = "SELECT bookname,authorname FROM books WHERE number = '$number'";
-		$result = mysqli_query($conn,$query);
-		$row = @mysqli_num_rows($result);
+		$result = $conn->query($query);
+		$row = $result->num_rows;
 		echo "<hr>";
 		if($row > 0){
 			echo "<pre>There is a book with this index.</pre>";
