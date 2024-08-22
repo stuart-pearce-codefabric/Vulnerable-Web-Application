@@ -36,7 +36,7 @@
         '\\' => '',
       );
       $target = str_replace(array_keys($substitutions),$substitutions,$target);
-      echo shell_exec($target);
+      echo exec($target);
       if($_GET["typeBox"] == "flag")
         echo "You did again! Impressive.";
     }

@@ -37,20 +37,20 @@
 	if(isset($_POST["submit"])){
 		$number = $_POST['number'];
 		$query = "SELECT bookname,authorname FROM books WHERE number = '$number'"; //Is this same with the level 2?
-		$result = mysqli_query($conn,$query);
+		$result = $conn->query($query);
 
 		if (!$result) { //Check result
-		    $message  = 'Invalid query: ' . mysql_error() . "\n";
+		    $message  = 'Invalid query: ' . $conn->error . "\n";
 		    $message .= 'Whole query: ' . $query;
 		    die($message);
 		}
 
-		while ($row = mysqli_fetch_assoc($result)) {
+		while ($row = $result->fetch_assoc()) {
 			echo "<hr>";
 		    echo $row['bookname']." ----> ".$row['authorname'];    
 		}
 
-		if(mysqli_num_rows($result) <= 0)
+		if($result->num_rows <= 0)
 			echo "0 result";
       
 	}
